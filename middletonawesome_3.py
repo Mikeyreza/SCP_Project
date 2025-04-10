@@ -25,10 +25,10 @@ mbar_width = window1.width * 0.4
 mbar_height = 30
 mbar_x = bar_x * 5
 
-mbar_y_1 = window1.height - 275
-mbar_y_2 = mbar_y_1 - 200
-mbar_y_3 = mbar_y_2 - 200
-mbar_y_4 = mbar_y_3 - 200
+mbar_y_1 = window1.height - 250
+mbar_y_2 = mbar_y_1 - 100
+mbar_y_3 = mbar_y_2 - 100
+mbar_y_4 = mbar_y_3 - 100
 
 # Total Status Bar Components
 background = shapes.Rectangle(bar_x, bar_y, bar_width, bar_height,
@@ -76,7 +76,7 @@ border_4 = shapes.Rectangle(mbar_x, mbar_y_4, mbar_width, mbar_height,
 border_4.opacity = 128
 
 # Labels
-total_label = pyglet.text.Label('Total Life Status',
+total_label = pyglet.text.Label('Life Support Status',
                                 font_name='Arial',
                                 font_size=24,
                                 x=window1.width // 2,
@@ -84,7 +84,7 @@ total_label = pyglet.text.Label('Total Life Status',
                                 anchor_x='center',
                                 anchor_y='bottom',
                                 batch=batch)
-m1_label = pyglet.text.Label('O2 Level',
+m1_label = pyglet.text.Label('O2 / CO2 Balance',
                              font_name='Arial',
                              font_size=24,
                              x=mbar_x + window1.width // 5,
@@ -92,7 +92,7 @@ m1_label = pyglet.text.Label('O2 Level',
                              anchor_x='center',
                              anchor_y='bottom',
                              batch=batch)
-m2_label = pyglet.text.Label('CO2 Level',
+m2_label = pyglet.text.Label('Temperature',
                              font_name='Arial',
                              font_size=24,
                              x=mbar_x + window1.width // 5,
@@ -100,7 +100,7 @@ m2_label = pyglet.text.Label('CO2 Level',
                              anchor_x='center',
                              anchor_y='bottom',
                              batch=batch)
-m3_label = pyglet.text.Label('Brody-ness Level',
+m3_label = pyglet.text.Label('Radiation',
                              font_name='Arial',
                              font_size=24,
                              x=mbar_x + window1.width // 5,
@@ -108,7 +108,7 @@ m3_label = pyglet.text.Label('Brody-ness Level',
                              anchor_x='center',
                              anchor_y='bottom',
                              batch=batch)
-m4_label = pyglet.text.Label('Document Management Percentage',
+m4_label = pyglet.text.Label('Electricity',
                              font_name='Arial',
                              font_size=24,
                              x=mbar_x + window1.width // 5,
@@ -134,7 +134,6 @@ def update_bars():
     progress_small = (progress_small + speed) % progress_max_small
     foreground.width = (progress / progress_max) * bar_width
     foreground.color = (int(252 - (progress / progress_max) * 252), int((progress / progress_max) * 252), 0)
-    print(foreground.color)
     foreground_1.width = (progress_small / progress_max_small) * mbar_width
     foreground_2.width = (progress_small / progress_max_small) * mbar_width
     foreground_3.width = (progress_small / progress_max_small) * mbar_width
@@ -150,8 +149,8 @@ def on_draw():
 #SECOND WINDOW#
 ###############
 
-window2 = pyglet.window.Window(height=640, width=768)
-window2.set_location(0, 700)
+window2 = pyglet.window.Window(height=650, width=768)
+window2.set_location(0, 710)
 batch2 = pyglet.graphics.Batch()
 
 # Game state
@@ -298,184 +297,108 @@ setup_question()
 # WINDOW THREE #
 ################
 
-window3 = pyglet.window.Window(height=640, width=768)
-window3.set_location(770, 0)
-batch3 = pyglet.graphics.Batch()
+# Configuration
+# Configuration
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 600
+IMAGE_DISPLAY_TIME = 2.0  # seconds per image
 
 
-# Game state
-class GameState:
+class ImageSlideshow:
     def __init__(self):
-        self.reset_problem()
-        self.selected_num1 = None
-        self.selected_num2 = None
-        self.message = "Select two numbers to solve the equation!"
-        self.message_color = (255, 255, 255, 255)
+        self.window = pyglet.window.Window(
+            height=640, width=768
+        )
 
-    def reset_problem(self):
-        # Generate random equation parameters
-        self.operation = random.choice(['+', '-', '*', '/'])
-        self.num1 = random.randint(1, 10)
-        self.num2 = random.randint(1, 10)
+        self.window.set_location(768, 0)
 
-        # Calculate target based on operation
-        if self.operation == '+':
-            self.target = self.num1 + self.num2
-        elif self.operation == '-':
-            self.target = self.num1 - self.num2
-        elif self.operation == '*':
-            self.target = self.num1 * self.num2
-        elif self.operation == '/':
-            # Ensure division results in integer
-            self.target = self.num1
-            self.num1 = self.num1 * self.num2
+        # Load your images (replace with your own image paths)
+        self.images = [
+            pyglet.resource.image("flower3.png"),  # Replace with actual paths
+            pyglet.resource.image("flower2.png"),
+            pyglet.resource.image("flower1.png")
+        ]
 
-        # Create options (include correct numbers and some random ones)
-        self.options = list({self.num1, self.num2,
-                             random.randint(1, 15),
-                             random.randint(1, 15),
-                             random.randint(1, 15)})
-        random.shuffle(self.options)
+        self.instruction_label = pyglet.text.Label(
+            "Water your plants to keep O2 and CO2 stable",
+            font_name='Arial',
+            font_size=24,
+            x=WINDOW_WIDTH // 2,
+            y=WINDOW_HEIGHT - 50,
+            anchor_x='center',
+            anchor_y='center',
+            color=(255, 255, 255, 255)  # White text
+        )
 
-    def check_solution(self, a, b):
-        # Check if the selected numbers solve the equation
-        try:
-            if self.operation == '+':
-                return a + b == self.target
-            elif self.operation == '-':
-                return a - b == self.target
-            elif self.operation == '*':
-                return a * b == self.target
-            elif self.operation == '/':
-                return a / b == self.target
-        except ZeroDivisionError:
-            return False
+        self.button = pyglet.shapes.Circle(
+            x=180,
+            y=300,
+            radius=100,
+            color=(30,144,255, 255)
+        )
 
+        self.arrow = pyglet.resource.image("waterarrow.png")
 
-game_state = GameState()
+        self.button_label = pyglet.text.Label(
+            "Water Plant",
+            font_name='Arial',
+            font_size=20,
+            x=self.button.x,
+            y=self.button.y,
+            anchor_x='center',
+            anchor_y='center',
+            color=(0,0,205, 255)
+        )
 
-# UI Elements
-equation_label = pyglet.text.Label(
-    "", font_size=24, x=window3.width // 2, y=500,
-    anchor_x='center', anchor_y='center', batch=batch3
-)
+        # Scale images to fit window while maintaining aspect ratio
+        for i, img in enumerate(self.images):
+            self.images[i] = self._scale_image(img)
 
-target_label = pyglet.text.Label(
-    "", font_size=24, x=window3.width // 2, y=450,
-    anchor_x='center', anchor_y='center', batch=batch3
-)
+        self.current_image_index = 0
+        self.sprite = pyglet.sprite.Sprite(self.images[0])
+        self._center_sprite()
 
-message_label = pyglet.text.Label(
-    "", font_size=20, x=window3.width // 2, y=100,
-    anchor_x='center', anchor_y='center', batch=batch3
-)
+        # Schedule image updates
+        pyglet.clock.schedule_interval(self.next_image, IMAGE_DISPLAY_TIME)
 
-# Create number option buttons
-option_buttons = []
-for i in range(5):
-    button = shapes.Rectangle(
-        x=150 + i * 120, y=300, width=100, height=80,
-        color=(50, 50, 200), batch=batch3
-    )
-    button_label = pyglet.text.Label(
-        "", font_size=24, x=150 + i * 120 + 50, y=340,
-        anchor_x='center', anchor_y='center', batch=batch3
-    )
-    option_buttons.append((button, button_label))
+        @self.window.event
+        def on_draw():
+            self.window.clear()
+            self.sprite.draw()
+            self.instruction_label.draw()
+            self.button.draw()
+            self.button_label.draw()
+            self.arrow.blit(x=310, y=225, width=200, height=150)
 
-# Create submit button
-submit_button = shapes.Rectangle(
-    x=window3.width // 2 - 50, y=200, width=100, height=50,
-    color=(0, 200, 0), batch=batch3
-)
-submit_label = pyglet.text.Label(
-    "Submit", font_size=20, x=window3.width // 2, y=225,
-    anchor_x='center', anchor_y='center', batch=batch3
-)
+    def _scale_image(self, image):
+        """Scale image to fit window while maintaining aspect ratio"""
+        scale = min(
+            WINDOW_WIDTH / image.width,
+            WINDOW_HEIGHT / image.height
+        )
+        image.width = int(200)
+        image.height = int(200)
+        return image
 
+    def _center_sprite(self):
+        """Center the sprite in the window"""
+        self.sprite.x = 500
+        self.sprite.y = 200
 
-def update_display():
-    # Update equation display
-    equation_label.text = f"Find numbers where: a {game_state.operation} b = ?"
-    target_label.text = f"Target: {game_state.target}"
-    message_label.text = game_state.message
-    message_label.color = game_state.message_color
+    def next_image(self, dt):
+        """Switch to the next image in the sequence"""
+        self.current_image_index = (self.current_image_index + 1) % len(self.images)
+        self.sprite.image = self.images[self.current_image_index]
+        self._center_sprite()
 
-    # Update option buttons
-    for i, (button, label) in enumerate(option_buttons):
-        if i < len(game_state.options):
-            label.text = str(game_state.options[i])
-            # Highlight selected numbers
-            if game_state.options[i] == game_state.selected_num1 or game_state.options[i] == game_state.selected_num2:
-                button.color = (200, 50, 50)  # Red for selected
-            else:
-                button.color = (50, 50, 200)  # Blue for unselected
-        else:
-            label.text = ""
-
-
-@window3.event
-def on_draw():
-    window3.clear()
-    batch3.draw()
-
-
-@window3.event
-def on_mouse_press(x, y, button, modifiers):
-    # Check option buttons
-    for i, (rect, _) in enumerate(option_buttons):
-        if (i < len(game_state.options) and
-                x >= rect.x and x <= rect.x + rect.width and
-                y >= rect.y and y <= rect.y + rect.height):
-            num = game_state.options[i]
-            if game_state.selected_num1 is None:
-                game_state.selected_num1 = num
-                game_state.message = f"First number: {num}. Select second number."
-                game_state.message_color = (255, 255, 255, 255)
-            elif game_state.selected_num2 is None and num != game_state.selected_num1:
-                game_state.selected_num2 = num
-                game_state.message = f"Selected numbers: {game_state.selected_num1} and {num}"
-                game_state.message_color = (255, 255, 255, 255)
-            break
-
-    # Check submit button
-    if (game_state.selected_num1 is not None and game_state.selected_num2 is not None and
-            x >= submit_button.x and x <= submit_button.x + submit_button.width and
-            y >= submit_button.y and y <= submit_button.y + submit_button.height):
-
-        if game_state.check_solution(game_state.selected_num1, game_state.selected_num2):
-            game_state.message = "Correct! Well done!"
-            game_state.message_color = (0, 255, 0, 255)
-            pyglet.clock.schedule_once(reset_after_delay, 2.0)
-        else:
-            game_state.message = "Incorrect. Try again!"
-            game_state.message_color = (255, 0, 0, 255)
-            game_state.selected_num1 = None
-            game_state.selected_num2 = None
-
-
-def reset_after_delay(dt):
-    game_state.reset_problem()
-    game_state.selected_num1 = None
-    game_state.selected_num2 = None
-    game_state.message = "Select two numbers to solve the equation!"
-    game_state.message_color = (255, 255, 255, 255)
-
-
-# Initial display update
-update_display()
-
-
-# Schedule regular updates
-def update(dt):
-    update_display()
+game2 = ImageSlideshow()
 
 #################
 # WINDOW FOUR!! #
 #################
 
-window4 = pyglet.window.Window(height=640, width=768)
-window4.set_location(770, 700)
+window4 = pyglet.window.Window(height=650, width=768)
+window4.set_location(768, 710)
 batch4 = pyglet.graphics.Batch()
 
 

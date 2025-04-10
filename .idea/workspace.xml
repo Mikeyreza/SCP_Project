@@ -4,22 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95334b1a-2c22-4fd2-b379-daf764e44b57" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/SCP_Project.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Button_Input.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DeepSeekWriting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ScreenButton.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pressed.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/unpressed.jpg" afterDir="false" />
+    <list default="true" id="95334b1a-2c22-4fd2-b379-daf764e44b57" name="Changes" comment="Everything">
+      <change afterPath="$PROJECT_DIR$/PlantAnimation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuickMath.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestingFile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flower1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flower2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flower3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middletonawesome_3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/waterarrow.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DeepSeekWriting.py" beforeDir="false" afterPath="$PROJECT_DIR$/DeepSeekWriting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScreenButton.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScreenButton.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="1" />
+    <option name="OUTPUT_DIRECTORY" value="D:/pythonscripts" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -44,13 +49,22 @@
   "keyToString": {
     "Python.Button_Input.executor": "Run",
     "Python.DeepSeekWriting.executor": "Run",
+    "Python.PlantAnimation.executor": "Run",
+    "Python.QuickMath.executor": "Run",
     "Python.ScreenButton.executor": "Run",
+    "Python.TestingFile.executor": "Run",
+    "Python.middletonawesome.executor": "Run",
+    "Python.middletonawesome_3.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master"
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/pythonscripts"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\pythonscripts" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\mikel\PycharmProjects\SCP_Project" />
     </key>
@@ -71,6 +85,19 @@
       <option name="presentableId" value="Default" />
       <updated>1742836056731</updated>
     </task>
+    <task id="LOCAL-00001" summary="Everything">
+      <option name="closed" value="true" />
+      <created>1743794210932</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743794210932</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Everything" />
+    <option name="LAST_COMMIT_MESSAGE" value="Everything" />
   </component>
 </project>
